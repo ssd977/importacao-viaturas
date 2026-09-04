@@ -20,7 +20,7 @@ def main(page: ft.Page):
         controls=[carro],
         expand=True,
     )
-
+page.add(ft.Image(src="assets/carro_grande-1.png", width=320))
     page.add(pista)
 
     async def mover_carro():
