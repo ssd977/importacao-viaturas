@@ -10,7 +10,7 @@ def main(page: ft.Page):
         content=ft.Image(
         src="assets/carro_grande-1.png",
             width=320,
-            fit=ft.ImageFit.CONTAIN,
+            fit=ft.BoxFit.CONTAIN,
         ),
         left=-350,
         top=100,
