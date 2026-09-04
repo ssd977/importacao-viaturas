@@ -1,58 +1,40 @@
 import flet as ft
+import asyncio
 
 
 def main(page: ft.Page):
-    page.title = "Aplicativo"
-    page.padding = 30
+    page.title = "Importação de Viaturas"
+    page.bgcolor = "black"
 
-    nome = ft.TextField(
-        label="Nome do cliente",
-        width=350
-    )
-
-    email = ft.TextField(
-        label="E-mail do cliente",
-        width=350
-    )
-
-    codigo = ft.TextField(
-        label="Código do cliente",
-        width=350
-    )
-
-    pais = ft.TextField(
-        label="País",
-        width=350
-    )
-
-    mensagem = ft.Text("")
-
-    def entrar(e):
-        if nome.value and email.value and codigo.value and pais.value:
-            mensagem.value = "Dados preenchidos com sucesso!"
-        else:
-            mensagem.value = "Preencha todos os campos."
-
-        page.update()
-
-    botao = ft.ElevatedButton(
-        text="Entrar",
-        on_click=entrar
-    )
-
-    page.add(
-        ft.Text(
-            "Cadastro do Cliente",
-            size=25,
-            weight=ft.FontWeight.BOLD
+    carro = ft.Container(
+        content=ft.Image(
+        src="assets/carro_grande-1.png",
+            width=320,
+            fit=ft.ImageFit.CONTAIN,
         ),
-        nome,
-        email,
-        codigo,
-        pais,
-        botao,
-        mensagem
+        left=-350,
+        top=100,
     )
+
+    pista = ft.Stack(
+        controls=[carro],
+        expand=True,
+    )
+
+    page.add(pista)
+
+    async def mover_carro():
+        while True:
+            carro.left = -350
+
+            while carro.left < page.width:
+                carro.left += 8
+                pista.update()
+                await asyncio.sleep(0.03)
+
+            await asyncio.sleep(1)
+
+    page.run_task(mover_carro)
 
 
 ft.run(main)

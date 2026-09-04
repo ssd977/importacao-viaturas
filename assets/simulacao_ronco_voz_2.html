@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simulação 2</title>
+<style>
+body{font-family:Arial,sans-serif;background:#080d14;color:#fff;text-align:center;padding:30px 18px}
+button{font-size:20px;padding:16px 25px;border:0;border-radius:14px;background:#147cff;color:#fff}
+#status{margin-top:24px;font-size:20px;min-height:50px}
+</style>
+</head>
+<body>
+<h1>🚘 Segunda simulação</h1>
+<p>Ronco mais forte, pausa curta e voz masculina.</p>
+<button onclick="start()">▶ Ouvir</button>
+<div id="status"></div>
+<script>
+function start(){
+  const C=window.AudioContext||window.webkitAudioContext, c=new C();
+  const o=c.createOscillator(), g=c.createGain();
+  o.type="sawtooth";
+  o.frequency.setValueAtTime(55,c.currentTime);
+  o.frequency.linearRampToValueAtTime(150,c.currentTime+0.7);
+  o.frequency.linearRampToValueAtTime(90,c.currentTime+1.4);
+  o.frequency.linearRampToValueAtTime(175,c.currentTime+2.0);
+  o.frequency.linearRampToValueAtTime(60,c.currentTime+3.2);
+  g.gain.setValueAtTime(.001,c.currentTime);
+  g.gain.linearRampToValueAtTime(.28,c.currentTime+.12);
+  g.gain.linearRampToValueAtTime(.001,c.currentTime+3.2);
+  o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+3.2);
+  document.getElementById("status").textContent="🚗 VROOOOOM!";
+  setTimeout(()=>{
+    document.getElementById("status").textContent="🎙️ Venha até nós e compre a tua viatura.";
+    const u=new SpeechSynthesisUtterance("Venha até nós e compre a tua viatura.");
+    u.lang="pt-PT"; u.rate=.82; u.pitch=.7; speechSynthesis.cancel(); speechSynthesis.speak(u);
+  },3900);
+}
+</script>
+</body>
+</html>
